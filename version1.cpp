@@ -19,133 +19,163 @@ void print_schema(vector<string> s){//cout<<s.size();
             for(int i=0;i<s.size();i++){cout<<s[i];cout<<"  |  ";}
             cout<<"\n";
 }
-//struct Table
-//    {
-//        vector<string> schema;
-//        map<string,int> attrbute_to_index;
-//        vector< vector<string> > value;
-//    };
+class Table
+    {   string f_name;
+
+
+
+    public:
+        vector< vector<string> > value;
+        vector<string> schema;
+        vector<int> type;
+        bool opened;
+
+        map<string,int> attrbute_to_index;
+        Table(string nam)
+            {f_name=nam;
+            string name=nam+".txt";
+        const char *myfile = name.c_str();
+        ifstream  data(myfile);
+        if(!data)opened=false;
+        else{opened=true;
+        string line;
+        int i=0;
+        while(getline(data,line))
+        {
+            stringstream  lineStream(line);
+            string  cell;
+            vector<string> temp;
+            while(getline(lineStream,cell,','))
+            {
+                temp.push_back(cell);
+
+            }
+            if(i==0)
+                {schema=temp;
+                    for(int k=0;k<temp.size();k++){
+                        attrbute_to_index[schema[k]]=k;
+                      //  cout<<attrbute_to_index[schema[k]]<<" "<<schema[k]<<"\n";
+                    }
+
+                }
+            else
+            {
+                value.push_back(temp);
+            }
+             i++;
+        }
+        string name=nam+"-info.txt";
+        const char *myfile = name.c_str();
+        ifstream  data(myfile);
+        while(getline(data,line))
+        {
+            stringstream  lineStream(line);
+            string  cell;
+            vector<int> temp;
+            while(getline(lineStream,cell,','))
+            {
+                if(cell[0]=='1')temp.push_back(1);
+                else temp.push_back(0);
+
+            }
+            type=temp;
+
+
+
+        }
+
+
+
+
+
+    }}
+
+    };
+vector <Table> Data;
+
+
+
+
+
+
 vector <string> data[100];
-string conditions;
-// A utility method to apply an operator 'op' on operands 'a'
-    // and 'b'. Return the result.
-    bool  applyOp(char op, string a, string b)
-    {
-        switch (op)
-        {
-        case '>':
-            return a > b;
-        case '<':
-            return a < b;
-        case '!=':
-            return a != b;
-        case '=':
-            return a == b;
+void union_(){
+scanf("(");
+               string name;
 
-        default:cout<<"error string";
+               getline(cin,name,',');
+               // cout<<name;
+              Table T(name);
+              bool out=false;
+            // for(int i=0;i<3;i++)cout<<T.attrbute_to_index[T.schema[i]]<" ";
+            if(T.opened!=true){cout<<"Error 102:Table '"<< name<< "' not found";out=true;}
+           // scanf("(");
+               string name2;
+                    if(out){
+                        return  ;
+                    }
+               getline(cin,name2,')');
+               // cout<<name;
+              Table T2(name2);
+              if(T2.opened!=true){cout<<"Error 102:Table '"<< name2<< "' not found";out=true;}
+                if(out){
+                        return  ;
+                    }
+             for(int i=0;i<T.schema.size();i++){
+                if(T.type[i]-T2.type[i]){cout<<"Error 103 : Not Union Comapatible";out=true;}
 
-        }
-    }
+             }
+             if(out){
+                        return  ;
+                    }
+                if(T.type.size()-T2.type.size()){cout<<"Error 103 : Not Union Comapatible";out=true;}
+                if(out){
+                        return  ;
+                    }
 
-// Returns true if 'op2' has higher or same precedence as 'op1',
-    // otherwise returns false.
-     bool hasPrecedence(char op1, char op2)
-    {
-        if (op2 == '(' || op2 == ')')
-            return false;
-        if ((op1 == '>' || op1 == '<') && (op2 == '=' || op2 == '!='))
-            return false;
-        else
-            return true;
-    }
+             for(int f=0;f<T.schema.size();f++)
+                        {if(f!=T.schema.size()-1)cout<<T.schema[f]<<"  |  ";else cout<<T.schema[f]; }
+                        cout<<"\n";
+         //cerr<<"here"<<cur_records;
+         map<vector<string> ,int> currently_printed;
+         for(int i=0;i<T2.value.size();i++)
+               {vector<string>cur;
+                   {for(int f=0;f<T.schema.size();f++)
+                        {cout<<T2.value[i][f]<<"     ";
+                        cur.push_back(T2.value[i][f]);
 
-    bool  evaluate(string expression,int Row_number)
-    {
-        //char[] tokens = expression.toCharArray();
-            string tokens=expression;
-         // Stack for numbers: 'values'
-        stack<string> values ;
-
-        // Stack for Operators: 'ops'
-        stack<char> ops ;
-
-        for (int i = 0; i < tokens.length(); i++)
-        {
-             // Current token is a whitespace, skip it
-            if (tokens[i] == ' ')
-                continue;
-
-            // Current token is a number, push it to stack for numbers
-            if ((tokens[i] >= '0' && tokens[i] <= '9' )|| (tokens[i] >= 'a' && tokens[i] <= 'z' ) )
-            {
-                string sbuf="";
-                // There may be more than one digits in number
-                while (i < tokens.length() && ((tokens[i] >= '0' && tokens[i] <= '9' )|| (tokens[i] >= 'a' && tokens[i] <= 'z' ) ))
-                    sbuf+=(tokens[i++]);
-                if(ato.find(sbuf)!=ato.end())values.push(data[Row_number][ato[sbuf]]);
-                else values.push(sbuf);
-            }
-
-            // Current token is an opening brace, push it to 'ops'
-            else if (tokens[i] == '(')
-                ops.push(tokens[i]);
-
-            // Closing brace encountered, solve entire brace
-            else if (tokens[i] == ')')
-            {
-                while (ops.top() != '(')
-                  {
-
-                  bool j=applyOp(ops.top(), values.top(), values.top());ops.pop();
-                  values.pop();values.pop();
-                  values.push(j);}
-                ops.pop();
-            }
-
-            // Current token is an operator.
-            else if (tokens[i] == '>' || tokens[i] == '<' ||
-                     tokens[i] == '!=' || tokens[i] == '=')
-            {
-                // While top of 'ops' has same or greater precedence to current
-                // token, which is an operator. Apply operator on top of 'ops'
-                // to top two elements in values stack
-                while (!ops.empty() && hasPrecedence(tokens[i], ops.top()))
-                 {
-
-                  bool j=applyOp(ops.top(), values.top(), values.top());ops.pop();
-                  values.pop();values.pop();
-                  values.push(j);}
-
-                // Push current token to 'ops'.
-                ops.push(tokens[i]);
-            }
-        }
-
-        // Entire expression has been parsed at this point, apply remaining
-        // ops to remaining values
-        while (!ops.empty())
-            {
-
-                  bool j=applyOp(ops.top(), values.top(), values.top());ops.pop();
-                  values.pop();values.pop();
-                  values.push(j);}
-
-        // Top of 'values' contains result, return it
-        return values.top();
-    }
+                        }
+                        currently_printed[cur]=1;
+                cout<<"\n";}
+               }
 
 
+         for(int i=0;i<T.value.size();i++)
+               {vector<string>cur;
+                   for(int f=0;f<T.schema.size();f++)
+                        {cur.push_back(T.value[i][f]);
+
+                        }
 
 
+               if(currently_printed.find(cur)==currently_printed.end())
+                   {for(int f=0;f<T.schema.size();f++)
+                        {cout<<T.value[i][f]<<"     ";
 
+                        }
+                        currently_printed[cur]=1;
+                cout<<"\n";}
+               }
+        start:currently_printed.clear();}
 
 int main(){
-
+        //Table T("Ab.txt");
+        //cout<<T.value[0][1];
    // Data data;
     char a;
     Schema schema;
     cin>>a;
-    while(a!='Q'){
+while(a!='Q'){
     if(a=='C')
     {   scanf("(%d,[",&attributes);
         for(int i=0;i<attributes;i++)
@@ -176,42 +206,66 @@ int main(){
 
    // cerr<<"here";
     }
-    if(a=='P'){
-        scanf("(%d,[",&pattribues);
-        for(int i=0;i<pattribues;i++)
-               {if(i==pattribues-1)scanf("%[a-z]]",&attri);
-                 else scanf("%[a-z],",&attri);
-               precords.push_back(ato[attri]);
+    if(a=='P'){scanf("(");
+               string name;
 
-               }
+               getline(cin,name,',');
+               // cout<<name;
+              Table T(name);
+            // for(int i=0;i<3;i++)cout<<T.attrbute_to_index[T.schema[i]]<" ";
+            if(T.opened!=true){cout<<"Error 104:Table '"<< name<< "' not found";}
+
+
+//      //  scanf("%d,[",&pattribues);cout<<pattribues;
+//        for(int i=0;i<pattribues;i++)
+//               {if(i==pattribues-1)scanf("%[a-z A-Z]]",&attri);
+//                 else scanf("%[a-z A-Z],",&attri);
+//                if(T.attrbute_to_index.find(arrtostring())==T.attrbute_to_index.end())
+//                    {cout<<"Error 101:Column '"<< attri<< "' not found";goto start;}
+//                else {  precords.push_back(T.attrbute_to_index[arrtostring()]);}
+//
+//
+//               }
+
+            scanf("[");
+            string attributes_asked;
+            getline(cin,attributes_asked,']');
+            stringstream  lineStream(attributes_asked);
+            string  cell;
+            while(getline(lineStream,cell,',')){
+                    if(T.attrbute_to_index.find(cell)==T.attrbute_to_index.end())
+                    {cout<<"Error 101:Column '"<< cell<< "' not found";goto start;}
+                else {  precords.push_back(T.attrbute_to_index[cell]);}}
+
          for(int f=0;f<precords.size();f++)
-                        {cout<<schema[precords[f]]<<"  |  ";}
+                        {if(f!=precords.size()-1)cout<<T.schema[precords[f]]<<"  |  ";else cout<<T.schema[precords[f]]; }
                         cout<<"\n";
          //cerr<<"here"<<cur_records;
-         for(int i=0;i<cur_records;i++)
-               {//cout<<i;
+         map<vector<string> ,int> currently_printed;
+         for(int i=0;i<T.value.size();i++)
+               {vector<string>cur;
                    for(int f=0;f<precords.size();f++)
-                        {cout<<data[i][precords[f]]<<"    ";
+                        {cur.push_back(T.value[i][precords[f]]);
 
                         }
-                cout<<"\n";
-               }
 
+
+               if(currently_printed.find(cur)==currently_printed.end())
+                   {for(int f=0;f<precords.size();f++)
+                        {cout<<T.value[i][precords[f]]<<"     ";
+
+                        }
+                        currently_printed[cur]=1;
+                cout<<"\n";}
+               }
+        currently_printed.clear();
 
         precords.clear();
     }
-    if(a=='S'){cout<<"daj";
-            scanf("([");
-            //string conditions;
-            getline(cin,conditions,']');
-            cout<<conditions;
-            vector<int> print;
-            for(int i=0;i<cur_records;i++)
-            {
-               // if(evaluate(i))print.push_back(i);
-            }
+    if(a=='U'){union_();
 
     }
+
 
 
         start:
@@ -220,5 +274,6 @@ int main(){
     exit(0);
 
 }
+
 
 
