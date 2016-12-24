@@ -15,7 +15,7 @@ string arrtostring(){int i=0;
         string h="";
         while(attri[i]!='\0'){h=h+char(attri[i]);i++;}return h;
 }
-void print_schema(vector<string> s){//cout<<s.size();
+void print_schema(vector<string> s){
             for(int i=0;i<s.size();i++){cout<<s[i];cout<<"  |  ";}
             cout<<"\n";
 }
