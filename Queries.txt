@@ -1,0 +1,56 @@
+U(studentsb:P(studentsa:[name,age,class]))
+S(U(studentsb:P(studentsa:[name,age,class])):[((age>8|name="Liam")^class>7)])
+P(S(U(studentsb:P(studentsa:[name,age,class])):[((age>8|name="Liam")^class>7)]):[name])
+U(P(S(U(studentsb:P(studentsa:[name,age,class])):[((age>8|name="Liam")^class>7)]):[name]):P(studentsc:[name]))
+//Cartesian product
+C(age:instructors)
+// name of instuctor teaching all  subjects
+%(P(instructors:[name,subject]):subject)
+%(P(instructors:[name,subject]):P(subject:[subject]))
+// name of instuctor teaching all science subjects
+%(P(instructors:[name,subject]):ssubjects)
+//Students common in a and b sections
+I(P(studentsa:[name]):P(studentsb:[name]))
+I(I(P(studentsa:[name,age,class]):studentsb):studentsc)
+//All students
+U(U(P(studentsa:[name,age,class]):studentsb):studentsc)
+//Number of students
+A(U(U(P(studentsa:[name,age,class]):studentsb):studentsc):[name,count(*)])
+//Eldest student age
+A(U(U(P(studentsa:[name,age,class]):studentsb):studentsc):[age,max])
+//Youngest student
+A(U(U(P(studentsa:[name,age,class]):studentsb):studentsc):[age,min])
+//All students older than 10
+S(U(U(P(studentsa:[name,age,class]):studentsb):studentsc):[(age>10)])
+//Maximum marks
+A(studentsa:[marks,max])
+//Average marks
+A(studentsa:[marks,avg])
+//Section A analysis
+R(A(studentsa:[marks,max,min,avg]):[highest,lowest,average])
+//All student names
+P(U(U(P(studentsa:[name,age,class]):studentsb):studentsc):[name])
+//Number of students
+A(P(U(U(P(studentsa:[name,age,class]):studentsb):studentsc):[name]):[name,count(*)])
+//All  classes in school
+P(U(U(P(studentsa:[name,age,class]):studentsb):studentsc):[class])
+//All class 9 students
+S(U(U(P(studentsa:[name,age,class]):studentsb):studentsc):[(class=9)])
+U(studentsa:studentsb)
+D(studentsb:P(studentsa:[name,age,class]))
+//Names of instructors who have more than 5 years of experience
+P(S(N(instructors:subject):[(experience>5)]):[name])
+//Names of HOD for science subjects
+N(Hod:ssubjects)
+//Names of instructors for science subjects
+N(instructors:ssubjects)
+//Count of maths instructors
+A(S(instructors:[(subject="maths")]):[name,count(*)])
+//Count of english teachers with appropriate header
+R(A(S(instructors:[(subject="english")]):[name,count(*)]):[English-t])
+//nested projects
+P(P(P(studentsa:[name,age,marks]):[name,age]):[name])
+
+
+
+
