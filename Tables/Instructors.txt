@@ -1,0 +1,14 @@
+name,subject,experience
+Amit,biology,10
+Amita,maths,11
+Charu,biology,3
+Charu,maths,2
+Meenal,physics,6
+Anil,physics,13
+Amit,maths,12
+Geeta,english,18
+Sandesh,chemistry,9
+Priya,biology,12
+Unnati,english,8
+Anil,chemistry,12
+Anil,maths,11

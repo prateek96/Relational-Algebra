@@ -1,0 +1,11 @@
+name,age,class
+Yash,9,7
+Meena,10,8
+Ayush,11,9
+Seema,8,6
+Seema,5,6
+Seema,3,6
+Meena,3,8
+Ayush,3,9
+Meena,5,8
+Ayush,5,9

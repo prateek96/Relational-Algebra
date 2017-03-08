@@ -1,0 +1,7 @@
+name,age,class
+Amit,5,3
+Shubh,8,6
+Mehul,11,9
+Sam,13,11
+DF,3,4
+DF,5,4

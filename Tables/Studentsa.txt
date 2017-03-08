@@ -1,0 +1,7 @@
+name,age,class,marks
+Amit,5,3,90
+Shubh,8,6,93
+Mehul,11,9,98
+Sam,13,11,89
+Divya,3,4,91
+Liam,5,4,83

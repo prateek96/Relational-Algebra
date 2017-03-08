@@ -1,0 +1,6 @@
+subject,code
+maths,101
+biology,102
+chemistry,103
+english,104
+physics,105

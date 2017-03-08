@@ -1,0 +1,6 @@
+name,subject,age
+Anil,physics,44
+Amit,maths,47
+Geeta,english,51
+Sandesh,chemistry,36
+Priya,biology,40
