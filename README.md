@@ -11,50 +11,50 @@ How to run the File:
 
 # Some sample queries 
 
-1. Union of students from 2 tables:
+# 1. Union of students from 2 tables:
 
 U(studentsb:P(studentsa:[name,age,class]))
 
-2. Selecting students specifying some condition and are also a part of the union described above
+# 2. Selecting students specifying some condition and are also a part of the union described above
 
 S(U(studentsb:P(studentsa:[name,age,class])):[((age>8|name="Liam")^class>7)])
 
-3.Projecting names only out of the above mentioned query
+# 3.Projecting names only out of the above mentioned query
 
 P(S(U(studentsb:P(studentsa:[name,age,class])):[((age>8|name="Liam")^class>7)]):[name])
 
-4.Union of above mentioned query with name from studentsc table
+# 4.Union of above mentioned query with name from studentsc table
 
 U(P(S(U(studentsb:P(studentsa:[name,age,class])):[((age>8|name="Liam")^class>7)]):[name]):P(studentsc:[name]))
 
-5.Cartesian product
+# 5.Cartesian product
 
 C(age:instructors)
 
-6.Name of instuctor teaching all  subjects
+# 6.Name of instuctor teaching all  subjects
 
 %(P(instructors:[name,subject]):subject) // Erraneous command
 
 %(P(instructors:[name,subject]):P(subject:[subject]))
 
-7.Name of instuctor teaching all science subjects
+# 7.Name of instuctor teaching all science subjects
 
 %(P(instructors:[name,subject]):ssubjects)
 
-8.Students common in a and b sections
+# 8.Students common in a and b sections
 
 I(P(studentsa:[name]):P(studentsb:[name]))
 
 I(I(P(studentsa:[name,age,class]):studentsb):studentsc)
 
-9.Maximum marks
+# 9.Maximum marks
 
 A(studentsa:[marks,max])
 
-10.Average marks
+# 10.Average marks
 
 A(studentsa:[marks,avg])
 
-11.Section A analysis
+# 11.Section A analysis
 
 R(A(studentsa:[marks,max,min,avg]):[highest,lowest,average])
